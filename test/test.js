@@ -23,7 +23,7 @@ describe('testing /users route', () => {
   });
   it('should hit a POST route for /users', (done) => {
     request('localhost:3000')
-    .post('/users')
+    .post('/public/users')
     .send({"name":"testPerson", "group":"hr", "password":"password"})
     .end((err, res) => {
       expect(err).to.equal(null);
@@ -39,7 +39,8 @@ describe('testing /login route', () => {
   it('should hit a POST route for /login with a correct user/pass', (done) => {
     request('localhost:3000')
     .post('/public/login')
-    .send({"name":"testPerson", "group":"hr", "password":"password"})
+    .set('Authorization', 'Basic testPerson:password')
+    .send({"name":"testPerson", "password":"password"})
     .end((err, res) => {
       expect(err).to.equal(null);
       expect(res).to.have.status(200);
@@ -48,12 +49,12 @@ describe('testing /login route', () => {
     });
   });
   it('should hit a POST route for /login with an incorrect user/pass', (done) => {
-    .request('localhost:3000')
+    request('localhost:3000')
     .post('/public/login')
     .send({"name":"testPerswfweweon", "group":"hr", "password":"passwordsfdafewd"})
     .end((err, res) => {
       expect(err).to.not.equal(null);
-      expect(res).to.have.status(200);
+      done();
     });
   });
 })

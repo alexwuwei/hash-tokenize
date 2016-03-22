@@ -20,12 +20,11 @@ module.exports = (router) => {
     console.log('method, name and pass are: ', method, name, password);
 
     User.find({name: name}, (err, user) => {
-      console.log('user is ' + user);
-      let valid = user.compareHash(password)
+      let valid = user[0].compareHash(password)
       if (!valid) {
         return res.json({status: 'fail!!!'})
       }
-      res.json({token: user.generateToken()});
+      res.json({token: user[0].generateToken()});
     });
   });
   router.post('/users', (req, res) => {
