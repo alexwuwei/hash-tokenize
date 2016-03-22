@@ -39,8 +39,8 @@ describe('testing /login route', () => {
   it('should hit a POST route for /login with a correct user/pass', (done) => {
     request('localhost:3000')
     .post('/public/login')
-    .set('Authorization', 'Basic testPerson:password')
-    .send({"name":"testPerson", "password":"password"})
+    .auth('testPerson', 'password')
+    // .send({"name":"testPerson", "password":"password"})
     .end((err, res) => {
       expect(err).to.equal(null);
       expect(res).to.have.status(200);
